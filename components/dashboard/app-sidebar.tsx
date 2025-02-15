@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart2, FileText, Settings, Users, User } from "lucide-react"
+import { Home, BarChart2, FileText, Settings, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Sidebar,
@@ -11,7 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuItemLink,
-} from "@/components/ui/sidebar"
+} from "@/components/other-sidebar"
 
 const dashboardNavItems = [
   {
@@ -24,6 +24,7 @@ const dashboardNavItems = [
     href: "/dashboard/matches",
     icon: FileText,
   },
+
   {
     title: "Profile",
     href: "/dashboard/profile",
@@ -35,12 +36,7 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-r border-zinc-800  ">
-      <SidebarHeader>
-        <div className="px-6 py-4">
-          <h2 className="text-lg font-bold text-white">Dashboard</h2>
-        </div>
-      </SidebarHeader>
+    <Sidebar className="border-r border-zinc-800">
       <SidebarContent>
         <SidebarMenu>
           {dashboardNavItems.map((item) => (
@@ -64,4 +60,3 @@ export function AppSidebar() {
     </Sidebar>
   )
 }
-

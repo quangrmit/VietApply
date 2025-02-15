@@ -41,6 +41,114 @@ export default function MatchesCards() {
                     location="Hanoi"
                     status="Viewed"
                 />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
+                <JobCard
+                    role="Data Analyst"
+                    company="Data Corp."
+                    location="Da Nang"
+                    status="Considering"
+                />
+                <JobCard
+                    role="Frontend Developer"
+                    company="Tech Solutions"
+                    location="Ho Chi Minh City"
+                    status="Applied"
+                />
+                <JobCard
+                    role="Product Manager"
+                    company="Innovation Inc."
+                    location="Hanoi"
+                    status="Viewed"
+                />
             </div>
         </div>
     );

@@ -12,8 +12,8 @@ export default function Navbar() {
     // refactor this code to loop through an obj for cleaner code.
 
     return (
-        <header className=" w-full border-b border-zinc-800 bg-black m-0 z-100">
-            <div className="flex h-20 items-center justify-between px-4">
+        <nav className=" w-full border-b border-zinc-800 bg-black m-0 z-100 sticky top-0 z-10 ">
+            <div className="flex h-20 items-center justify-between px-4 ">
                 <div className=" text-xl relative left-4 font-bold">VietApply</div>
                 <nav className="flex space-x-6 text-lg font-extralight items-center">
                     <Link
@@ -40,6 +40,6 @@ export default function Navbar() {
                     </Button>
                 </nav>
             </div>
-        </header>
+        </nav>
     );
 }
