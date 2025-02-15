@@ -1,0 +1,7 @@
+redis
+pgvector
+psycopg
+sentence_transformers
+playwright
+beautifulsoup4
+requests
