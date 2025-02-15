@@ -2,6 +2,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from '@/components/navbar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} dark`}
       >
+        <Navbar/>
         {children}
       </body>
       <GoogleTagManager gtmId='G-2D4QZYP55V'/>
