@@ -89,14 +89,6 @@ const jobs = [
 
 export default function JobsPage() {
   const [selectedJob, setSelectedJob] = useState(jobs[0])
-  const [result, setResult] = useState("");
-
-  const handleClick = async () => {
-    setResult("Processing...");
-    const res = await fetch("/api/job", { method: "POST" });
-    const data = await res.json();
-    setResult(data.message);
-  };
 
   return (
     <div className="grid h-[calc(100vh-4rem)] grid-cols-[400px,1fr] gap-0 mt-10">
