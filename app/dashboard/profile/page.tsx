@@ -1,7 +1,7 @@
 import { DocumentList } from "@/components/dashboard/document-list";
 import { ProfileForm } from "@/components/dashboard/profile-form";
 
-const resumers = [
+const resumes = [
     { id: "1", name: "Python_Software.pdf" },
     { id: "2", name: "Data_Analyst.pdf" },
     { id: "3", name: "NodeJS.pdf" },
@@ -52,7 +52,7 @@ export default function ProfilePage() {
 <h1 className="mb-8 text-2xl font-bold text-white">Profile Information</h1> 
             <div className="mx-auto max-w-5xl space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
-                    <DocumentList title="Resumers" documents={resumers} />
+                    <DocumentList title="Resumes" documents={resumes} />
                 </div>
                 <ProfileForm initialData={profileData} onUpdate={handleUpdateProfile} />
             </div>

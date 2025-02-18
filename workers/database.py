@@ -18,6 +18,37 @@ register_vector(conn)
 # conn.execute('CREATE TABLE jobs (id bigserial PRIMARY KEY, link text, content text, embedding vector(768))')
 
 '''
+Function to insert 1 CV to a user's database
+Input: A resume
+Output: None
+'''
+def insert_jobs(docs):
+    base_url = "https://ybox.vn"
+    for link in docs:
+        for job in docs[link]:
+            print("Inserting job...")
+            embed = embed_document(job)
+            conn.execute("INSERT INTO jobs (link, content, embedding) VALUES (%s, %s, %s)", (base_url + link, job, embed))
+
+    return
+
+'''
+Function to extract text from a PDF resume
+Input: A PDF file
+Output: A list of strings
+'''
+
+def pdf_text(pdf):
+    text_list = []
+    with open(pdf_path, "rb") as file:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            text_list.append(page.extract_text())
+    return text_list
+
+
+
+'''
 Function to insert multiple job posts crawl from website into database
 Input: A list of jobs object
 Output: None
