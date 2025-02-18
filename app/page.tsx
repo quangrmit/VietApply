@@ -5,21 +5,60 @@ import { useState } from "react";
 
 export default function Home() {
 
-  const [result, setResult] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleClick = async () => {
-    setResult("Processing...");
-    const res = await fetch("/api/job", { method: "POST" });
-    const data = await res.json();
-    setResult(data.message);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!file) {
+      alert("Please select a file before submitting.");
+      return;
+    }
+
+    setUploading(true);
+    setMessage("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/job", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      setMessage(result.message);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setMessage("Failed to submit job.");
+    }
+
+    setUploading(false);
+  };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div>
-        <button onClick={handleClick}>Trigger Job</button>
-        <p>{result}</p>
+      <div className="container mx-auto p-4">
+        <h2 className="text-lg font-bold mb-2">Upload a File and Submit Job</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input type="file" onChange={handleFileChange} className="border p-2" />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            disabled={uploading}
+          >
+            {uploading ? "Uploading..." : "Submit Job"}
+          </button>
+        </form>
+        {message && <p className="mt-4 font-medium">{message}</p>}
       </div>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
