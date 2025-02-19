@@ -17,11 +17,6 @@ import { Input } from "../ui/input";
 import { useContext, useEffect, useState } from "react";
 import { ResumeContext } from "@/app/layout";
 
-interface Resume {
-    id: string;
-    filename: string;
-    data: object;
-}
 
 interface DocumentListProps {
     title: string;
@@ -31,34 +26,25 @@ interface DocumentListProps {
 export function DocumentList({ title }: DocumentListProps) {
     const [file, setFile] = useState<File | null>(null);
 
-    const {resumes, setResumes} = useContext(ResumeContext);
-    
+    const { resumes, setResumes } = useContext(ResumeContext);
+
     const fetchResumes = async () => {
-
-        console.log(setResumes);
-
-        console.log("fetching");
         try {
             const response = await fetch("http://localhost:3000/api/resumes");
             const data = await response.json();
-            
+
             setResumes(data);
-            
+
             console.log(data);
         } catch (error) {
             console.log(error);
         }
     };
-    
+
     useEffect(() => {
         fetchResumes();
     }, []);
 
-
-    useEffect(() => {
-        console.log('res changed')
-        console.log(resumes)
-    }, [resumes])
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const files = event.target.files;
@@ -91,10 +77,21 @@ export function DocumentList({ title }: DocumentListProps) {
         console.log("preview data: ", data);
     };
 
+    const onDelete = async (id: string) => {
+        try{
+            const response = await fetch(`http://localhost:3000/api/delete-cv?id=${id}`)
+            const data = await response.json();
 
-    const adjustPDFWidth = () => {
-        
+        }catch(error){
+            console.log(error);
+
+        }
+
+
+
+        fetchResumes();
     }
+
 
     return (
         <div className="rounded-lg bg-zinc-900 p-4">
@@ -103,7 +100,6 @@ export function DocumentList({ title }: DocumentListProps) {
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant={"outline"}>
-                            {" "}
                             <PlusIcon />
                         </Button>
                     </DialogTrigger>
@@ -141,22 +137,27 @@ export function DocumentList({ title }: DocumentListProps) {
                     >
                         <Dialog>
                             <DialogTrigger>
-                                <span className="text-sm text-zinc-300 hover:underline hover:cursor-pointer" onClick={adjustPDFWidth}>
+                                <span
+                                    className="text-sm text-zinc-300 hover:underline hover:cursor-pointer"
+    
+                                >
                                     {doc.filename}
                                 </span>
                             </DialogTrigger>
-                            <DialogContent>
+                            <DialogContent className="max-w-3xl">
                                 <DialogTitle>{doc.filename}</DialogTitle>
-                                <iframe src={`http://localhost:3000/api/preview?id=${doc.id}`} width="100%" height="400px"/>
-                           
-                    
+                                <iframe
+                                    src={`http://localhost:3000/api/preview?id=${doc.id}`}
+                                    width="100%"
+                                    height="400px"
+                                />
                             </DialogContent>
                         </Dialog>
                         <Button
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 text-red-400 hover:text-red-500"
-                            //   onClick={() => onDelete(doc.id)}
+                              onClick={() => onDelete(doc.id)}
                         >
                             <Trash2 className="h-4 w-4" />
                         </Button>
