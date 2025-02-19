@@ -14,32 +14,60 @@ import {
 } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ResumeContext } from "@/app/layout";
 
-interface Document {
+interface Resume {
     id: string;
-    name: string;
+    filename: string;
+    data: object;
 }
 
 interface DocumentListProps {
     title: string;
-    documents: Document[];
     //   onDelete: (id: string) => void
 }
 
-export function DocumentList({ title, documents }: DocumentListProps) {
+export function DocumentList({ title }: DocumentListProps) {
     const [file, setFile] = useState<File | null>(null);
 
+    const {resumes, setResumes} = useContext(ResumeContext);
+    
+    const fetchResumes = async () => {
+
+        console.log(setResumes);
+
+        console.log("fetching");
+        try {
+            const response = await fetch("http://localhost:3000/api/resumes");
+            const data = await response.json();
+            
+            setResumes(data);
+            
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchResumes();
+    }, []);
+
+
+    useEffect(() => {
+        console.log('res changed')
+        console.log(resumes)
+    }, [resumes])
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const files = event.target.files;
         if (files && files.length > 0) {
-            setFile(files[0]); 
-        
+            setFile(files[0]);
         }
     };
 
-    const handleAddResume = async ()  => {
+    const handleAddResume = async () => {
         if (!file) return;
 
         const formData = new FormData();
@@ -47,18 +75,31 @@ export function DocumentList({ title, documents }: DocumentListProps) {
 
         const response = await fetch("http://localhost:3000/api/upload", {
             method: "POST",
-            body: formData
+            body: formData,
         });
 
         const data = await response.json();
         console.log("Upload response:", data);
-    }
+        fetchResumes();
+    };
 
+    const handlePreviewFile = async () => {
+        const response = await fetch("http://localhost:3000/api/preview");
+
+        // Receives blob data instead of json
+        const data = await response.blob();
+        console.log("preview data: ", data);
+    };
+
+
+    const adjustPDFWidth = () => {
+        
+    }
 
     return (
         <div className="rounded-lg bg-zinc-900 p-4">
             <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-white">
-                {title} <div className="text-zinc-400">[{documents.length}]</div>
+                {title} <div className="text-zinc-400">[{resumes.length}]</div>
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant={"outline"}>
@@ -66,7 +107,7 @@ export function DocumentList({ title, documents }: DocumentListProps) {
                             <PlusIcon />
                         </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="max-w-80">
                         <DialogHeader>
                             <DialogTitle>Upload a resume</DialogTitle>
                         </DialogHeader>
@@ -75,9 +116,10 @@ export function DocumentList({ title, documents }: DocumentListProps) {
                                 Resume
                             </Label> */}
                             <Input
-                                id="picture"
+                                // id="picture"
                                 type="file"
                                 accept="application/pdf"
+                                multiple
                                 onChange={handleFileChange}
                             />
                         </div>
@@ -92,12 +134,24 @@ export function DocumentList({ title, documents }: DocumentListProps) {
                 </Dialog>
             </h2>
             <div className="h-[300px] space-y-2 overflow-y-auto scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700 pr-2">
-                {documents.map((doc) => (
+                {resumes.map((doc) => (
                     <div
                         key={doc.id}
                         className="flex items-center justify-between rounded-md bg-zinc-800 px-4 py-2"
                     >
-                        <span className="text-sm text-zinc-300">{doc.name}</span>
+                        <Dialog>
+                            <DialogTrigger>
+                                <span className="text-sm text-zinc-300 hover:underline hover:cursor-pointer" onClick={adjustPDFWidth}>
+                                    {doc.filename}
+                                </span>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogTitle>{doc.filename}</DialogTitle>
+                                <iframe src={`http://localhost:3000/api/preview?id=${doc.id}`} width="100%" height="400px"/>
+                           
+                    
+                            </DialogContent>
+                        </Dialog>
                         <Button
                             variant="ghost"
                             size="icon"

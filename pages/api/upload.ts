@@ -33,6 +33,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         console.log('Files:', files);
 
         const file = files.pdf[0]; // Assuming file is in an array
+        const oriFilename = file.originalFilename;
         const fileBuffer = fs.readFileSync(file.filepath); // Read the file into a buffer
 
         // Fixing the userId
@@ -40,10 +41,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
         try {
             // SQL query to insert file as a BLOB (BYTEA)
-            const sql = 'INSERT INTO cvs (user_id, data) VALUES ($1, $2) RETURNING id';
+            const sql = 'INSERT INTO cvs (filename, data) VALUES ($1, $2) RETURNING id';
             console.log('this is file buffer')
             console.log(fileBuffer);
-            const values = [userId, fileBuffer];
+            const values = [oriFilename, fileBuffer];
             const result = await query(sql, values); // Insert into your PostgreSQL database
             console.log(result)
 
@@ -54,3 +55,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         }
     });
 }
+
+
+

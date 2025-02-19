@@ -82,7 +82,9 @@ export default function SearchDialog() {
                 </div>
 
                 <DialogFooter className="sm:justify-start">
-                
+                    <DialogClose asChild>
+                        <Button onClick={handleSearch}>Search</Button>
+                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
