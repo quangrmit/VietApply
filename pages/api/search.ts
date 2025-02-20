@@ -13,6 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     await redis.lpush("job_queue", JSON.stringify(message));
 
-    res.status(200).send("Success");
+    res.status(200).send({"status": "success"});
 
 }
