@@ -86,9 +86,6 @@ export function DocumentList({ title }: DocumentListProps) {
             console.log(error);
 
         }
-
-
-
         fetchResumes();
     }
 
