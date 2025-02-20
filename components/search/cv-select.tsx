@@ -14,9 +14,15 @@ export default function CVSelect() {
     const {resumes, setResumes, selectedResume, setSelectedResume} = useContext(ResumeContext);
 
     const chooseFromList = (index: string) => {
-        const result = resumes[parseInt(index) - 1];
+        const result = resumes[parseInt(index)];
         setSelectedResume(result)
     }   
+
+
+    useEffect(() => {
+        console.log('changed')
+        console.log(selectedResume);
+    }, [selectedResume])
 
     return (
         <Select onValueChange={chooseFromList}>
@@ -24,8 +30,8 @@ export default function CVSelect() {
                 <SelectValue placeholder="Choose resume" />
             </SelectTrigger>
             <SelectContent className="h-40">
-                {resumes.map((resume) => (
-                    <SelectItem value={resume.id} key={resume.id}>
+                {resumes.map((resume, index) => (
+                    <SelectItem value={index.toString()} key={resume.id}>
                         {resume.filename}
                     </SelectItem>
                 ))}

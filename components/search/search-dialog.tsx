@@ -29,16 +29,27 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CVUpload from "./cv-upload";
 import { useRouter } from "next/navigation";
 import CVSelect from "./cv-select";
+import { useContext, useEffect } from "react";
+import { ResumeContext } from "@/app/layout";
 
 export default function SearchDialog() {
     const router = useRouter();
+    const {selectedResume} = useContext(ResumeContext)
 
-    const handleSearch = () => {
+    useEffect(() => {
+        console.log('selected changed')
+        console.log(selectedResume)
+    }, [selectedResume])
+
+    const handleSearch = async () => {
         // Extract key words from user prompt
 
         // Extract embedding of the CV
 
         // Run the search op (have some state to render the search page)
+        const response = await fetch(`http://localhost:3000/api/search?id=${selectedResume?.id}`)
+        const data = await response.json();
+
 
         // Reroute to the main page to display search results
         router.push("/");
