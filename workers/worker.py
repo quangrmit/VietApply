@@ -3,26 +3,29 @@ import json
 import base64
 import time
 
+from database import fetch_resume_text, vector_search_job
+
 r = redis.Redis(host="localhost", port=6379, decode_responses=True)
 
 def process_job(job_data):
     """Custom processing logic"""
-    job_id = job_data["jobId"]
-    message = job_data["message"]
-    file_data = job_data.get("fileData")
+    print(f"Processing job: {job_data}")
+    message_id = job_data["messageId"]
+    resume_id = job_data["resumeId"]
+    
+    # Extract resume content
+    text = fetch_resume_text(resume_id)
 
-    # Decode base64 file
-    if file_data:
-        file_bytes = base64.b64decode(file_data)
-        print(file_bytes)
-        with open(f"/test/{job_id}.txt", "wb") as f:  # Save file temporarily
-            f.write(file_bytes)
+    # Search similar job
+    res = vector_search_job(text)
 
-    # Simulate processing
-    result = f"Processed {message} with file {job_id}.txt"
+    # Serialize object
+    res = json.dumps(res)
 
+    print(res)
     # Store result in Redis
-    r.set(f"result:{job_id}", result, ex=300)  # Expire in 5 minutes
+    r.hset(message_id, "status", "complete")
+    r.hset(message_id, "result", res)
 
 while True:
     print("Processing")
@@ -30,9 +33,8 @@ while True:
     if job_json:
         job_data = json.loads(job_json)
         try:
-            print(job_data)
-            # process_job(job_data)
+            process_job(job_data)
         except Exception as e:
-            print(f"Error processing job {job_data['jobId']}: {e}")
+            print(f"Error processing job {job_data['messageId']}: {e}")
     else:
         time.sleep(1)  # Avoid busy-waiting, poll every 1 second
