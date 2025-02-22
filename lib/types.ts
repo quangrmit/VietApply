@@ -10,3 +10,22 @@ export type ResumeContextType = {
     selectedResume: Resume | null;
     setSelectedResume: (resume: Resume) => void;
 }
+
+export interface ProfileData {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    email: string;
+    phone: string;
+    location: string;
+    minSalary: string;
+    maxSalary: string;
+    jobType: string;    
+    skills: string[];
+    about: string;
+}
+
+export interface ProfileFormProps {
+    initialData: ProfileData;
+    // onUpdate: (data: ProfileData) => void;
+}
