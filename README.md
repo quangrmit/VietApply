@@ -1,3 +1,5 @@
+<img src="https://res.cloudinary.com/dbmzwv11o/image/upload/v1740498936/3d78bc29417099f3110216df41aac69441d4f5642278dbda1826570a61ad3e6c-removebg-preview_jz7y1w.png" width = "300" height = "300"></img>
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
