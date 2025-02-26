@@ -5,6 +5,7 @@ import { query } from "./db"
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const data = JSON.parse(req.body);
 
+    // first step to validation
     if (!data){
         res.status(400).send({'message': 'body is required'})
     }
@@ -19,6 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const result = await query(sql, values);
     console.log(result);
 
-    return res.json(result);
+    return res.status(200).json(result);
 
 }  

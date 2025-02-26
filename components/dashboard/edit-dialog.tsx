@@ -10,6 +10,7 @@ import e from "express";
 import LabelInput from "./label-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import DatePicker from "../ui/date-picker";
+import CitiesSearch from "./cities-search";
 
 export default function EditDialog({ initialData }: ProfileFormProps) {
     const [date, setDate] = useState<Date>();
@@ -18,21 +19,24 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
 
     const handleChange = (field: keyof ProfileData, value: string) => {
         const newData = { ...profileData, [field]: value };
+
+        console.log(`changing ${field} to ${value}`)
+
         setData(newData);
     };
 
     const handleSaveChanges = async () => {
         // call post api for posting the information
-        console.log('saving changes')
+        console.log("saving changes");
 
         const response = await fetch("http://localhost:3000/api/profile-post", {
             method: "POST",
-            body: JSON.stringify(profileData)
-        })
-    
-        const data = await response.json()
+            body: JSON.stringify(profileData),
+        });
+
+        const data = await response.json();
         console.log(data);
-    }
+    };
 
     return (
         <Dialog>
@@ -41,7 +45,7 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
             </DialogTrigger>
             <DialogContent className="max-w-[80vw]">
                 <DialogTitle asChild>
-                    <h1>Edit profile</h1>
+                    <h1 className="font-bold">Edit profile</h1>
                 </DialogTitle>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -60,10 +64,11 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                     />
 
                     <div>
-                        <Label className="text-zinc-400" htmlFor="dob">Date of Birth</Label>
+                        <Label className="text-zinc-400" htmlFor="dob">
+                            Date of Birth
+                        </Label>
                         <div id="dob">
-
-                        <DatePicker date={date} setDate={setDate} initialDate={initialData.dateOfBirth}/>
+                            <DatePicker date={date} setDate={setDate} initialDate={initialData.dateOfBirth} />
                         </div>
                     </div>
                     <LabelInput
@@ -80,12 +85,11 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                         inputOnchange={handleChange}
                     />
 
-                    <LabelInput
-                        elementId="location"
-                        labelText="location"
-                        inputValue={profileData.location}
-                        inputOnchange={handleChange}
-                    />
+    
+                    <div className="space-y-2">
+                        <Label className="block text-zinc-400">Location</Label>
+                        <CitiesSearch handleSelect={handleChange} initialValue={profileData.location} />
+                    </div>
 
                     <div id="salary" className=" space-x-2 grid grid-cols-2">
                         <div className="space-y-2">
@@ -96,7 +100,7 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                                 id="salaryMin"
                                 value="3000"
                                 onChange={(e) => handleChange("lastName", e.target.value)}
-                                className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                                className="text-zinc-100  disabled:opacity-100"
                             />
                         </div>
                         <div className="space-y-2">
@@ -107,7 +111,7 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                                 id="salaryMin"
                                 value="3000"
                                 onChange={(e) => handleChange("lastName", e.target.value)}
-                                className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                                className=" text-zinc-100  disabled:opacity-100"
                             />
                         </div>
                     </div>
@@ -117,7 +121,7 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                             Preferred Job Type
                         </Label>
                         <Select onValueChange={(value) => handleChange("jobType", value)}>
-                            <SelectTrigger className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100">
+                            <SelectTrigger className=" text-zinc-100 disabled:opacity-100">
                                 <SelectValue placeholder="Select job type" />
                             </SelectTrigger>
                             <SelectContent>
@@ -125,6 +129,7 @@ export default function EditDialog({ initialData }: ProfileFormProps) {
                                 <SelectItem value="part-time">Part-time</SelectItem>
                                 <SelectItem value="contract">Contract</SelectItem>
                                 <SelectItem value="freelance">Freelance</SelectItem>
+                                <SelectItem value="internship">Internship</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

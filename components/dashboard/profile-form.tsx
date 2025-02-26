@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,13 +13,13 @@ import { ProfileData } from "@/lib/types";
 
 
 // Fetch instead of fixing
-const initialData = {
+const initialData: ProfileData = {
     firstName: "Quang",
     lastName: "Nguyen",
     dateOfBirth: new Date(2003, 11, 17),
     email: "quang.nguyen@example.com",
     phone: "+84 123 456 789",
-    location: "Ho Chi Minh City, Vietnam",
+    location: "Hồ Chí Minh",
     minSalary: "3000000",
     maxSalary: "5000000",
     jobType: "full-time",
@@ -31,6 +31,16 @@ const initialData = {
 
 export function ProfileForm() {
 
+    const currUserId = 1;
+    const fetchProfileData = async () => {
+        const response = await fetch(`http://localhost:3000/api/profile-get?id={currUserId}`)
+        const data = await response.json();
+        console.log(data);
+    }
+
+    useEffect(() => {
+        fetchProfileData();
+    }, [])
 
 
 
@@ -51,17 +61,19 @@ export function ProfileForm() {
                         value={initialData.firstName}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="lastName" className="text-zinc-400">
                         Last name
-                    </Label>
+                    </Label>2
                     <Input
                         id="lastName"
                         value={initialData.lastName}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div className="space-y-2">
@@ -73,6 +85,7 @@ export function ProfileForm() {
                         value={initialData.dateOfBirth.toLocaleDateString()}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div className="space-y-2">
@@ -85,6 +98,7 @@ export function ProfileForm() {
                         value={initialData.email}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div className="space-y-2">
@@ -96,6 +110,7 @@ export function ProfileForm() {
                         value={initialData.phone}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div className="space-y-2">
@@ -107,6 +122,7 @@ export function ProfileForm() {
                         value={initialData.location}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
+                        readOnly
                     />
                 </div>
                 <div id="salary" className=" space-x-2 grid grid-cols-2">
@@ -118,6 +134,7 @@ export function ProfileForm() {
                                 id="salaryMin"
                                 value="3000"
                                 className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                                readOnly
                             />
                         </div>
                         <div className="space-y-2">
@@ -128,6 +145,7 @@ export function ProfileForm() {
                                 id="salaryMin"
                                 value="3000"
                                 className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                                readOnly
                             />
                         </div>
                     </div>

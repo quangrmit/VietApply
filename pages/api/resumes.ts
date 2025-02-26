@@ -9,8 +9,6 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         // const values = [fileId];
         const result = await query(sql);
 
-        console.log(result)
-
         res.status(200).send(result);
-    
+
 }

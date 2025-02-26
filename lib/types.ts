@@ -11,6 +11,8 @@ export type ResumeContextType = {
     setSelectedResume: (resume: Resume) => void;
 }
 
+export type JobType = "full-time" | "part-time" | "freelance" | "contract" | "internship"
+
 export interface ProfileData {
     firstName: string;
     lastName: string;
@@ -20,7 +22,7 @@ export interface ProfileData {
     location: string;
     minSalary: string;
     maxSalary: string;
-    jobType: string;    
+    jobType: JobType;    
     skills: string[];
     about: string;
 }
@@ -29,3 +31,4 @@ export interface ProfileFormProps {
     initialData: ProfileData;
     // onUpdate: (data: ProfileData) => void;
 }
+
