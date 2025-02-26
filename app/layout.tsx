@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 
-export const ResumeContext = createContext<ResumeContextType>({ resumes: [], setResumes: () => {}, selectedResume: null, setSelectedResume: () => {}});
+export const ResumeContext = createContext<ResumeContextType>({ resumes: [], setResumes: () => { }, selectedResume: null, setSelectedResume: () => { } });
 
 export default function RootLayout({
     children,
@@ -30,11 +30,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`dark`}>
-              <ResumeContext.Provider value={{resumes, setResumes, selectedResume, setSelectedResume}}>
+                <ResumeContext.Provider value={{ resumes, setResumes, selectedResume, setSelectedResume }}>
 
-                <Navbar />
-                {children}
-              </ResumeContext.Provider>
+                    <Navbar />
+                    {children}
+                </ResumeContext.Provider>
             </body>
             <GoogleTagManager gtmId="G-2D4QZYP55V" />
         </html>

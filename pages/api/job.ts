@@ -1,28 +1,52 @@
-// import { NextApiRequest, NextApiResponse } from "next";
-// import Redis from "ioredis";
-// import { v4 as uuidv4 } from "uuid";
+import { NextApiRequest, NextApiResponse } from "next";
+import Redis from "ioredis";
+import { v4 as uuidv4 } from "uuid";
+import formidable, { IncomingForm, File } from "formidable";
+import fs from "fs/promises";
 
-// const redis = new Redis("redis://localhost:6379");
+export const config = {
+    api: {
+        bodyParser: false, // Disable Next.js default body parser for file uploads
+    },
+};
 
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//     if (req.method !== "POST") return res.status(405).json({ message: "Method Not Allowed" });
+const redis = new Redis("redis://localhost:6379");
 
-//     const jobId = uuidv4();
-//     const message = `Job-${Math.floor(Math.random() * 1000)}`;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ message: "Method Not Allowed" });
+    }
 
-//     // Push to Redis queue
-//     await redis.lpush("job_queue", JSON.stringify({ jobId, message }));
+    const form = new IncomingForm();
 
-//     // Wait for the result
-//     let result;
-//     for (let i = 0; i < 30; i++) {  // 30 retries
-//         result = await redis.get(`result:${jobId}`);
-//         if (result) {
-//             await redis.del(`result:${jobId}`); // Cleanup
-//             return res.status(200).json({ message: result });
-//         }
-//         await new Promise((resolve) => setTimeout(resolve, 100)); // Wait 0.5 sec
-//     }
+    try {
+        // Use a Promise to parse the form data
+        const parseForm = () =>
+            new Promise<{ fields: formidable.Fields; files: formidable.Files }>((resolve, reject) => {
+                form.parse(req, (err, fields, files) => {
+                    if (err) reject(err);
+                    else resolve({ fields, files });
+                });
+            });
 
-//     return res.status(408).json({ message: "Job timed out" });
-// }
+        const { fields, files } = await parseForm();
+
+        const jobId = uuidv4();
+        const message = `Job-${Math.floor(Math.random() * 1000)}`;
+
+        let fileData = null;
+        if (files.file) {
+            const file = Array.isArray(files.file) ? files.file[0] : files.file;
+            const fileBuffer = await fs.readFile(file.filepath);
+            fileData = fileBuffer.toString("base64"); // Convert file to Base64
+        }
+
+        // Push job to Redis queue
+        await redis.lpush("job_queue", JSON.stringify({ jobId, message, fileData }));
+
+        return res.status(200).json({ message: "Job added successfully", jobId });
+    } catch (error) {
+        console.error("Error processing file:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}

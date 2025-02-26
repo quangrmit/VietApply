@@ -15,7 +15,7 @@ def runYbox(playwright: Playwright):
     #     )
     # page = context.new_page()
     # page.goto("https://ybox.vn/tuyen-dung-viec-lam-tk-c1?keyword=", wait_until = "load")
-
+    # time.sleep(3)
     # prev_height = -1
     # count = 0
     # while count < 0:
@@ -32,7 +32,6 @@ def runYbox(playwright: Playwright):
 
     #     prev_height = new_height
     #     count += 1
-
     # links = page.query_selector_all('a[href^="/tuyen-dung/"]')
     # job_details = {}
     # job_links = []
@@ -42,6 +41,7 @@ def runYbox(playwright: Playwright):
     #     job_links.append(mid)
 
     # job_links = list(dict.fromkeys(job_links))
+    # # print(job_links)
     # for link in job_links:
     #     job_details[link] = extractJobDescription(base_url + link)
     
@@ -53,7 +53,9 @@ def runYbox(playwright: Playwright):
     job_details = {}
     with open("test.json") as file:
         job_details = json.load(file)
-    insert_jobs(job_details)
+    # insert_jobs(job_details)
+
+    # print(extractJobDescription("https://ybox.vn/tuyen-dung/hn-cong-ty-thuong-mai-quoc-te-bluestars-tuyen-dung-nhan-vien-digital-marketing-fulltime-2025-muc-luong-8-000-000-10-000-000-vnd-thang-thuong-67a578156a99c25d6797bca3?feed=true"))
 
 def extractJobDescription(link):
     print("____________________________")
@@ -63,28 +65,56 @@ def extractJobDescription(link):
         return "Can't access the web page"
 
     soup = BeautifulSoup(response.text, 'html.parser')
+
+    res = {}
+    ## Extract relevant data
+    title = soup.select('h3 a')
+    res['title'] = title[0].text
+    company = soup.select('.username')
+    res['company'] = company[1].text
+
+    target_div = soup.find_all('div', style="background:#eaeaea;padding:15px;margin:10px 0 10px 0;border-radius:10px;")
+    # print(target_div[0].get_text().strip())
+    
+    ## Extract feature
+    feature_text = target_div[0].get_text().strip()
+    keywords = ("Mức lương", "Chuyên môn", "Kinh nghiệm", "Địa điểm", "Tính chất công việc")
+    keywords_col = {"Mức lương": "salary", "Chuyên môn": "skills", "Kinh nghiệm": "experience", "Địa điểm": "location", "Tính chất công việc": "job-type"}
+    keywords_map = {}
+    for keyword in keywords:
+        keywords_map[keyword] = feature_text.find(keyword)
+    keywords_map = {k: v for k, v in sorted(keywords_map.items(), key=lambda item: item[1])}
+    keys = list(keywords_map.keys())
+    keyword_index = list(keywords_map.values())
+
+    for i in range(len(keys)):
+        if (i == len(keys) - 1):
+            res[keywords_col[keys[i]]] = feature_text[keyword_index[i]:] 
+            break
+        res[keywords_col[keys[i]]] = feature_text[keyword_index[i]:keyword_index[i+1]]           
+
+    ## Extract entire jobs content
     target_div = soup.find_all('div', { "id": "post-content" })[0]
     child_divs = target_div.find_all('div', recursive=False)[1:]
-
-    # print(len(child_divs))
-    # print(child_divs)
-    res = []
+    jobs_content = []
     for div in child_divs:
-        res.append(stripTag(div))
+        jobs_content.append(stripTag(div))
     
     ## Some page format with inconsistent div elements, result in overbloating elements
-    if (len(res) >= 10):
-        mid = "\n".join(res)
-        return [mid]
+    if (len(jobs_content) >= 10):
+        mid = "\n".join(jobs_content)
+        jobs_content = [mid]
+    
+    res['description'] = jobs_content
     return res
 
 def stripTag(div_element):
     extracted_texts = []
-    for element in div_element.find_all(recursive=True):  # Get all nested elements
+    for element in div_element.find_all(recursive=True):
         if element.string and element.string.strip():
-            extracted_texts.append(element.string.strip())  # Store cleaned text
+            extracted_texts.append(element.string.strip())
     extracted_texts = list(dict.fromkeys(extracted_texts))
-    res = "\n".join(extracted_texts)  # Join ext
+    res = "\n".join(extracted_texts)
     return res
 
 
