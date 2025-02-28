@@ -1,38 +1,40 @@
-<img src="https://res.cloudinary.com/dbmzwv11o/image/upload/v1740498936/3d78bc29417099f3110216df41aac69441d4f5642278dbda1826570a61ad3e6c-removebg-preview_jz7y1w.png" width = "300" height = "300"></img>
+<div align="center">
+<img src="https://res.cloudinary.com/dbmzwv11o/image/upload/v1740498936/3d78bc29417099f3110216df41aac69441d4f5642278dbda1826570a61ad3e6c-removebg-preview_jz7y1w.png" width = "270" height = "270"></img>
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VietApply - AI Job Matching for Vietnamese Market
 
-## Getting Started
+</div>
 
-First, run the development server:
+VietApply is a Web platform that helps to identify jobs that match perfectly to your personal CV designed for the Vietnamese job markets. In the modern job markets, it has becoming more important in finding a job that perfectly match with your skills, though as CVs and Jobs are getting more and more complex with tons of requirements and specifications, details might be go under the radar when finding the perfect fitting jobs. With that in mind, our system is tailored to process and working with Vietnamese CV and Job using an advanced vietnamese embedding model, helping us to capture small details in skills and requirements.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div align="center">
+<img src="https://res.cloudinary.com/dbmzwv11o/image/upload/v1740744554/landing_jqlysa.png" width="100%"></img>  
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tables of Contents
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. [Installation](#installation)
+2. [Features](#features)
+3. [Architecture](#architecture)
+4. [Contributing](#contributing)
+5. [License](#license)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
+### Development
 
-## Learn More
+### Docker
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- AI Job Matching
+- User Dashboard
+- Web Crawler
+- Google Auth
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+## Contributing
+Feel free to contribute VietApply to help foster a community
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+VietApply is Blaze is [MIT Licensed](https://github.com/quangrmit/VietApply/blob/main/LICENSE)
