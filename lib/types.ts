@@ -16,7 +16,8 @@ export type JobType = "full-time" | "part-time" | "freelance" | "contract" | "in
 export interface ProfileData {
     firstName: string;
     lastName: string;
-    dateOfBirth: Date;
+    middleName: string;
+    dateOfBirth: Date ;
     email: string;
     phone: string;
     location: string;
@@ -25,6 +26,19 @@ export interface ProfileData {
     jobType: JobType;    
     skills: string[];
     about: string;
+}
+export type LoginData = {
+    email: string;
+    password: string;
+}
+
+export type JwtPayload = {
+    email: string;
+    role: string;
+}
+
+export type UserData = ProfileData & {
+    password: string
 }
 
 export interface ProfileFormProps {
