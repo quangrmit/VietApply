@@ -67,7 +67,7 @@ export function ProfileForm() {
                 <div className="space-y-2">
                     <Label htmlFor="lastName" className="text-zinc-400">
                         Last name
-                    </Label>2
+                    </Label>
                     <Input
                         id="lastName"
                         value={initialData.lastName}
@@ -145,7 +145,8 @@ export function ProfileForm() {
                                 id="salaryMin"
                                 value="3000"
                                 className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                                readOnly
+                                
+                                disabled
                             />
                         </div>
                     </div>

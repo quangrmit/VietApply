@@ -1,124 +1,58 @@
 "use client";
-import { Resume, ResumeContextType } from "@/lib/types";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../components/ui/card";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SignUpFlow from "@/components/auth/sign-up-flow";
+import ProgressSignUp from "@/components/auth/progress-sign-up";
 
-import { useState } from "react";
-import { JobCard } from "@/components/search/search-job-card";
-import { JobDetail } from "@/components/search/job-detail";
-import { createContext } from "react";
+export default function HomePage() {
 
-const jobs = [
-  {
-    id: 1,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["C++", "Java", "Spring", "+2"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 2,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["Python", "SQL", "Tableau"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 3,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 4,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 5,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 6,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 7,
-    title: "Data Analyst",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-  {
-    id: 8,
-    title: "Software Engineering",
-    company: "Data Corp.",
-    salary: "$2,200 / tháng",
-    location: "Da Nang | On-site",
-    postedTime: "Đăng 1 phút trước",
-    skills: ["R", "Excel", "PowerBI"],
-    description: "This is a sample job description. The actual content would go here.",
-  },
-];
+    const generateToken = async (credentialResponse: CredentialResponse) => {
+        const credential = credentialResponse.credential;
+        const response = await fetch("http://localhost:3000/api/verify-google-token", {
+            method: "POST",
+            body: JSON.stringify({token: credential})
+        })
+        const data = await response.json();
+        console.log(data);
+    }
+
+    return (
+        <div className="min-w-3xl max-w-4xl ">
+            <Card className="flex flex-col items-center">
+                <Tabs defaultValue="sign-up" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="sign-up">Sign up</TabsTrigger>
+                        <TabsTrigger value="log-in">Log in</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="sign-up">
+                        <SignUpFlow/>
+                    </TabsContent>
+                    <TabsContent value="log-in">
+                        Log in
+                    </TabsContent>
+                </Tabs>
+                <CardContent>
+                    <Button>Sign up</Button>
+                </CardContent>
+                Or
+                <CardFooter>
+                    <GoogleLogin
+                        onSuccess={(credentialResponse) => {
+                            generateToken(credentialResponse)
+                        }}
+                        onError={() => {
+                            console.log("Login Failed");
+                        }}
+        
+                    />
+                </CardFooter>
+            </Card>
 
 
-
-export default function JobsPage() {
-
-
-  const [selectedJob, setSelectedJob] = useState(jobs[0]);
-  const [result, setResult] = useState("");
-
-  const handleClick = async () => {
-    setResult("Processing...");
-    const res = await fetch("/api/job", { method: "POST" });
-    const data = await res.json();
-    setResult(data.message);
-  };
-
-  return (
-    <div className="grid h-[calc(100vh-4rem)] grid-cols-[400px,1fr] gap-0 mt-10">
-      <div className="space-y-4 overflow-y-auto border-r border-zinc-800 p-4">
-        {jobs.map((job) => (
-          <JobCard
-            key={job.id}
-            {...job}
-            isSelected={selectedJob.id === job.id}
-            onClick={() => setSelectedJob(job)}
-          />
-        ))}
-      </div>
-      <div className="overflow-y-auto">
-        <JobDetail job={selectedJob} />
-      </div>
-    </div>
-  );
+        </div>
+    );
 }

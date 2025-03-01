@@ -5,14 +5,10 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import SearchDialog from "./search/search-dialog";
-
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Navbar() {
     const pathname = usePathname();
-
-    const handleSearchTrigger = () => {
-        console.log("Triggered")
-    }
 
     // refactor this code to loop through an obj for cleaner code.
 
@@ -39,9 +35,9 @@ export default function Navbar() {
                     >
                         Dashboard
                     </Link>
-
-            
-                    <SearchDialog/>
+                
+                    
+                    <SearchDialog />
                 </nav>
             </div>
         </nav>

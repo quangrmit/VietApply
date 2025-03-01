@@ -6,6 +6,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { createContext, useState } from "react";
 import { Resume, ResumeContextType } from "@/lib/types";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,15 +30,21 @@ export default function RootLayout({
     const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
     const [resumes, setResumes] = useState<Resume[]>([]);
     return (
+        <GoogleOAuthProvider clientId="125849592219-nbou4ddqnl4vdjn3smsff8huqfbmsvot.apps.googleusercontent.com">
+
         <html lang="en">
-            <body className={`dark`}>
+            <body className="dark">
                 <ResumeContext.Provider value={{ resumes, setResumes, selectedResume, setSelectedResume }}>
 
                     <Navbar />
+                    <div className="flex items-center justify-center">
+
                     {children}
+                    </div>
                 </ResumeContext.Provider>
             </body>
             <GoogleTagManager gtmId="G-2D4QZYP55V" />
         </html>
+        </GoogleOAuthProvider>
     );
 }
