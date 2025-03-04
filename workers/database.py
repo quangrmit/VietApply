@@ -20,9 +20,6 @@ register_vector(conn)
 ## Only run this function if this is the first time setting up the database
 def setup():
     
-    conn.execute("CREATE EXTENSION IF NOT EXISTS vector")
-    register_vector(conn)
-
     conn.execute('DROP TABLE IF EXISTS jobs')
     conn.execute('CREATE TABLE jobs (id bigserial PRIMARY KEY, title text, company text, salary text, location text, skills text, link text, content text, embedding vector(768))')
 
@@ -31,6 +28,15 @@ def setup():
 
 # setup()
 
+def setup_benchmark():
+    conn.execute('DROP TABLE IF EXISTS jobs_benchmark')
+    conn.execute('CREATE TABLE jobs_benchmark (id bigserial PRIMARY KEY, title text, company text, salary text, location text, skills text, link text, content text, embedding vector(768))')
+
+def insert_jobs_benchmark(jobs):
+    for job in jobs:
+        embed = embed_document(job['content'])
+
+        conn.execute("INSERT INTO jobs_benchmark (title, company, salary, location, skills, link, content, embedding) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (job['title'], job['company'], job['salary'], job['location'], job['skills'], job['link'], job['content'], embed))
 '''
 Function to insert 1 CV to a user's database
 Input: A resume
@@ -85,7 +91,19 @@ def vector_search_job(cv):
     print("Embedding the CV")
     embed_cv = embed_document(cv)
     
-    neighbors = conn.execute("SELECT id FROM jobs ORDER BY embedding <=> %s LIMIT 5", (embed_cv,))
+    neighbors = conn.execute("SELECT id FROM jobs ORDER BY embedding <=> %s LIMIT 10", (embed_cv,))
+
+    res = []
+    for neighbor in neighbors:
+        res.append(neighbor[0])
+    return res
+
+
+def vector_search_job_benchmark(cv):
+    print("Embedding the CV")
+    embed_cv = embed_document(cv)
+    
+    neighbors = conn.execute("SELECT id FROM jobs_benchmark ORDER BY embedding <=> %s DESC LIMIT 10", (embed_cv,))
 
     res = []
     for neighbor in neighbors:

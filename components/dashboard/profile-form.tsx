@@ -1,49 +1,41 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-import { Edit } from "lucide-react";
-import { Button } from "../ui/button";
-import EditDialog from "./edit-dialog";
+import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface ProfileData {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-    email: string;
-    phone: string;
-    location: string;
-    salaryPreference: string;
-    jobType: string;
-    skills: string;
-    about: string;
+    firstName: string
+    lastName: string
+    dateOfBirth: string
+    email: string
+    phone: string
+    location: string
+    salaryPreference: string
+    jobType: string
+    skills: string
+    about: string
 }
 
 interface ProfileFormProps {
-    initialData: ProfileData;
-    onUpdate: (data: ProfileData) => void;
+    initialData: ProfileData
+    onUpdate: (data: ProfileData) => void
 }
 
 export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState(initialData)
 
     const handleChange = (field: keyof ProfileData, value: string) => {
-        const newData = { ...data, [field]: value };
-        setData(newData);
-        onUpdate(newData);
-    };
+        const newData = { ...data, [field]: value }
+        setData(newData)
+        onUpdate(newData)
+    }
 
     return (
         <div className="rounded-lg bg-zinc-900 p-4 h-full overflow-y-auto ">
-            <div className="flex justify-between">
-                <h2 className="mb-4 text-xl font-semibold text-white ">My Profile</h2>
-
-                <EditDialog />
-            </div>
+            <h2 className="mb-4 text-xl font-semibold text-white">My Profile</h2>
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-zinc-400">
@@ -53,8 +45,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="firstName"
                         value={data.firstName}
                         onChange={(e) => handleChange("firstName", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -65,8 +56,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="lastName"
                         value={data.lastName}
                         onChange={(e) => handleChange("lastName", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -77,8 +67,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="dateOfBirth"
                         value={data.dateOfBirth}
                         onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -90,8 +79,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         type="email"
                         value={data.email}
                         onChange={(e) => handleChange("email", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -102,8 +90,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="phone"
                         value={data.phone}
                         onChange={(e) => handleChange("phone", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -114,8 +101,7 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="location"
                         value={data.location}
                         onChange={(e) => handleChange("location", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                        disabled
+                        className="bg-zinc-800 text-zinc-100 border-none"
                     />
                 </div>
                 <div className="space-y-2">
@@ -126,17 +112,16 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                         id="salaryPreference"
                         value={data.salaryPreference}
                         onChange={(e) => handleChange("salaryPreference", e.target.value)}
-                        className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                        className="bg-zinc-800 text-zinc-100 border-none"
                         placeholder="e.g. $50,000 - $70,000"
-                        disabled
                     />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="jobType" className="text-zinc-400">
                         Preferred Job Type
                     </Label>
-                    <Select onValueChange={(value) => handleChange("jobType", value)} disabled>
-                        <SelectTrigger className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100">
+                    <Select onValueChange={(value) => handleChange("jobType", value)}>
+                        <SelectTrigger className="bg-zinc-800 text-zinc-100 border-none">
                             <SelectValue placeholder="Select job type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -156,9 +141,8 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                     id="skills"
                     value={data.skills}
                     onChange={(e) => handleChange("skills", e.target.value)}
-                    className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                    className="bg-zinc-800 text-zinc-100 border-none"
                     placeholder="e.g. JavaScript, React, Node.js"
-                    disabled
                 />
             </div>
             <div className="mt-4 space-y-2">
@@ -169,12 +153,11 @@ export function ProfileForm({ initialData, onUpdate }: ProfileFormProps) {
                     id="about"
                     value={data.about}
                     onChange={(e) => handleChange("about", e.target.value)}
-                    className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                    className="bg-zinc-800 text-zinc-100 border-none"
                     placeholder="Brief description about yourself"
                     rows={3}
-                    disabled
                 />
             </div>
         </div>
-    );
+    )
 }
