@@ -25,7 +25,7 @@ export default function LabelInput({
             <Input
                 id={elementId}
                 value={inputValue}
-                onChange={(e) => inputOnchange("lastName", e.target.value)}
+                onChange={(e) => inputOnchange(elementId as keyof ProfileData, e.target.value)}
                 className=" text-zinc-100  disabled:opacity-100 hover:bg-accent"
             />
         </div>

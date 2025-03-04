@@ -1,7 +1,7 @@
 "use client";
 import { DocumentList } from "@/components/dashboard/document-list";
 
-import { ProfileForm } from "@/components/dashboard/profile-form";
+import { ProfileInfo } from "@/components/dashboard/profile-info";
 import React, { useEffect, useState, useContext, createContext } from "react";
 
 export default function ProfilePage() {
@@ -13,7 +13,7 @@ export default function ProfilePage() {
                     <DocumentList title="Resumes" />
                 </div>
 
-                <ProfileForm />
+                <ProfileInfo />
             </div>
         </div>
     );

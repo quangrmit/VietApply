@@ -15,38 +15,14 @@ import {
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ProfileData } from "@/lib/types";
+import {City, CitiesSearchProps} from '../../lib/types'
+import useCities from "@/hooks/useCities";
 
-type City = {
-    _id: string;
-    name: string;
-    slug: string;
-    type: string;
-    name_with_type: string;
-    isDeleted: boolean;
-    code: string;
-};
-type CitiesSearchProps = {
-    handleSelect: (field: keyof ProfileData, value: string) => void;
-    initialValue: string;
-};
 
 export default function CitiesSearch({ handleSelect, initialValue }: CitiesSearchProps) {
     const [open, setOpen] = useState(false);
-    const [selectedCity, setSelectedCity] = useState("");
-    const [citiesObj, setCitiesObj] = useState([]);
-    const cityNames = citiesObj.map((city: City) => {
-        return { name: city.name, normalizedName: removeAccents(city.name) };
-    });
-
-    const getCities = async () => {
-        const response = await fetch("http://localhost:3000/api/cities-get");
-        const data = await response.json();
-        setCitiesObj(data);
-    };
-    useEffect(() => {
-        getCities();
-    }, []);
-
+    const {selectedCity, cityNames} = useCities();
+  
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>

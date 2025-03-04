@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { verifyPassword } from "@/lib/utils";
-import { LoginData } from "@/lib/types";
+import { generateToken, verifyPassword } from "@/lib/utils";
+import { JwtPayload, LoginData } from "@/lib/types";
 import { query } from "./db";
 
 
@@ -10,7 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({message: "Body is required"})
     }
 
-    const loginData = <LoginData>req.body;
+    const loginData = <LoginData>JSON.parse(req.body);
+    console.log("this is login data", loginData)
     const email = loginData.email;
     const password = loginData.password
     
@@ -33,6 +34,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!shouldAuth){
         return res.status(401).json({message: 'Invalid password'})
     }
-    return res.status(200).json({message: "Successful login"})
+
+    // should return a jwt here
+    const payload : JwtPayload = {
+        email: email,
+        role: 'user',
+        sub: 'VietApply'
+    }
+    const token = generateToken(payload)
+
+    return res.status(200).json({message: "Successful login", token: token})
 
 }

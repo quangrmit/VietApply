@@ -7,52 +7,29 @@ import { Button } from "../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignUpFlow from "@/components/auth/sign-up-flow";
 import ProgressSignUp from "@/components/auth/progress-sign-up";
+import { ProfileData } from "@/lib/types";
+import LoginSignup from "@/components/auth/login-signup";
+import { SetStateAction, useEffect, useState } from "react";
+import JobsPage from "./jobs/page";
+import { createContext } from "react";
+import useLogin from "@/hooks/useLogin";
 
+export const AuthContext = createContext(
+    { loggedIn: false, 
+        setLoggedIn: (loggedIn: boolean) => {}
+     })
 export default function HomePage() {
+    const {loggedIn, setLoggedIn} = useLogin();
+  
 
-    const generateToken = async (credentialResponse: CredentialResponse) => {
-        const credential = credentialResponse.credential;
-        const response = await fetch("http://localhost:3000/api/verify-google-token", {
-            method: "POST",
-            body: JSON.stringify({token: credential})
-        })
-        const data = await response.json();
-        console.log(data);
-    }
+
+    useEffect(() => {
+        console.log('changed logged in to ', loggedIn)
+    }, [loggedIn])
 
     return (
-        <div className="min-w-3xl max-w-4xl ">
-            <Card className="flex flex-col items-center">
-                <Tabs defaultValue="sign-up" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="sign-up">Sign up</TabsTrigger>
-                        <TabsTrigger value="log-in">Log in</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="sign-up">
-                        <SignUpFlow/>
-                    </TabsContent>
-                    <TabsContent value="log-in">
-                        Log in
-                    </TabsContent>
-                </Tabs>
-                <CardContent>
-                    <Button>Sign up</Button>
-                </CardContent>
-                Or
-                <CardFooter>
-                    <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                            generateToken(credentialResponse)
-                        }}
-                        onError={() => {
-                            console.log("Login Failed");
-                        }}
-        
-                    />
-                </CardFooter>
-            </Card>
-
-
-        </div>
+        <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
+            <>{loggedIn ? <JobsPage /> : <LoginSignup />}</>
+        </AuthContext.Provider>
     );
 }

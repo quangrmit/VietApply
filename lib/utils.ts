@@ -3,6 +3,7 @@ import { TokenPayload } from "google-auth-library";
 import { twMerge } from "tailwind-merge"
 import jwt, { Secret } from "jsonwebtoken";
 import bcrypt from 'bcryptjs';
+import { JwtPayload } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -12,10 +13,45 @@ export function cn(...inputs: ClassValue[]) {
 export function removeAccents(s: string): string {
   return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
- // Hashing a password
+// Hashing a password
 export async function hashPassword(password: string) {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
+}
+
+export function splitByComma(str: string) {
+  // Check if the input is a string
+  if (typeof str !== 'string') {
+    return [str];
+  }
+
+  // Trim the string first
+  const trimmedStr = str.trim();
+
+  // Check if the trimmed string contains a comma
+  if (trimmedStr.includes(',')) {
+    // Split by comma and trim each resulting value
+    return trimmedStr.split(',')
+      .map(item => item.trim())
+    // .filter(item => item !== '');
+  } else {
+    // Return an array with just the trimmed original string
+    return [trimmedStr];
+  }
+}
+
+export function generateToken(payload: JwtPayload) {
+  const secret = <Secret>process.env.JWT_SECRET;
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT secret is missing from environment variables");
+  }
+
+  const token = jwt.sign(
+    payload,
+    secret,            // secret key
+    { expiresIn: '100h' }                // options
+  );
+  return token;
 }
 
 // Verifying a password
@@ -23,18 +59,7 @@ export async function verifyPassword(password: string, hashedPassword: string) {
   return await bcrypt.compare(password, hashedPassword);
 }
 
-export function verifyToken(token: string) {
 
-  const JWT_KEY = <Secret>process.env.JWT_SECRET;
-  
-  // Verify a token
-  try {
-    const decoded = jwt.verify(token, JWT_KEY);
-    console.log(decoded);
-  } catch (error) {
-    console.error('Invalid token');
-  }
-}
 
 export function OauthPayloadChecks(payload: TokenPayload | undefined, cliendId: string): { status: boolean; message: string } {
 

@@ -33,7 +33,7 @@ export default function RootLayout({
         <GoogleOAuthProvider clientId="125849592219-nbou4ddqnl4vdjn3smsff8huqfbmsvot.apps.googleusercontent.com">
 
         <html lang="en">
-            <body className="dark">
+            <body className="dark stable-scrollbar overflow-y-auto">
                 <ResumeContext.Provider value={{ resumes, setResumes, selectedResume, setSelectedResume }}>
 
                     <Navbar />
