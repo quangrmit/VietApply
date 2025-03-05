@@ -9,27 +9,18 @@ import SignUpFlow from "@/components/auth/sign-up-flow";
 import ProgressSignUp from "@/components/auth/progress-sign-up";
 import { ProfileData } from "@/lib/types";
 import LoginSignup from "@/components/auth/login-signup";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import JobsPage from "./jobs/page";
 import { createContext } from "react";
 import useLogin from "@/hooks/useLogin";
+import { AuthContext } from "./layout";
 
-export const AuthContext = createContext(
-    { loggedIn: false, 
-        setLoggedIn: (loggedIn: boolean) => {}
-     })
 export default function HomePage() {
-    const {loggedIn, setLoggedIn} = useLogin();
-  
-
+    const { loggedIn } = useContext(AuthContext);
 
     useEffect(() => {
-        console.log('changed logged in to ', loggedIn)
-    }, [loggedIn])
+        console.log("changed logged in to ", loggedIn);
+    }, [loggedIn]);
 
-    return (
-        <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
-            <>{loggedIn ? <JobsPage /> : <LoginSignup />}</>
-        </AuthContext.Provider>
-    );
+    return <>{loggedIn ? <JobsPage /> : <LoginSignup />}</>;
 }

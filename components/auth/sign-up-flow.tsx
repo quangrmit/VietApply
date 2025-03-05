@@ -8,7 +8,8 @@ import { splitByComma } from "@/lib/utils";
 import { profile } from "console";
 import { Input } from "../ui/input";
 import { json } from "stream/consumers";
-import { AuthContext } from "@/app/page";
+import { AuthContext } from "@/app/layout";
+import { Label } from "../ui/label";
 
 const initialSignUpData: ProfileData = {
     firstName: "",
@@ -25,7 +26,7 @@ const initialSignUpData: ProfileData = {
 };
 
 export default function SignUpFlow() {
-    const {setLoggedIn} = useContext(AuthContext)
+    const { setLoggedIn } = useContext(AuthContext);
     const [profileData, setProfileData] = useState(initialSignUpData);
     const [pwd, setPwd] = useState("");
 
@@ -39,15 +40,15 @@ export default function SignUpFlow() {
     }, [profileData]);
 
     const handleSignUp = async () => {
-        console.log('handling sign up')
+        console.log("handling sign up");
         // Get all the profile data
-        const userData = {...profileData, password: pwd};
+        const userData = { ...profileData, password: pwd };
 
         // Call the post api
         const response = await fetch("http://localhost:3000/api/profile-post", {
             method: "POST",
-            body: JSON.stringify(userData)
-        })
+            body: JSON.stringify(userData),
+        });
 
         const data = await response.json();
 
@@ -60,7 +61,18 @@ export default function SignUpFlow() {
             {/* Prop drill into the profile form */}
             <ProfileForm profileData={profileData} handleChange={handleChange} />
             {/* <ProgressSignUp /> */}
-            <Input placeholder="Password" value={pwd} onChange={(e) => setPwd(e.target.value)} type="password"/>
+            {/* <Input></Input> */}
+            <div className=" mt-3">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                    id="password"
+                    placeholder="Password"
+                    value={pwd}
+                    onChange={(e) => setPwd(e.target.value)}
+                    type="password"
+                    className="border-zinc-500 w-[50%]"
+                />
+            </div>
             <Button onClick={handleSignUp}>Sign up</Button>
         </div>
     );

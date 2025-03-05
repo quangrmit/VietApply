@@ -30,7 +30,7 @@ export default function CitiesSearch({ handleSelect, initialValue }: CitiesSearc
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-[200px] justify-between border-zinc-500 flex"
                 >
                     {selectedCity
                         ? cityNames.find((city) => city.normalizedName === selectedCity)?.name

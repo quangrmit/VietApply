@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // should return a jwt here
+    // should include the user id as well, or create an index for email for faster retrieval
     const payload : JwtPayload = {
         email: email,
         role: 'user',

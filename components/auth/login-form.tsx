@@ -5,10 +5,9 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { LoginData } from "@/lib/types";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "@/app/page";
+import { AuthContext } from "@/app/layout";
 
 export default function LoginForm() {
-    const router = useRouter();
     const [loginEmail, setLoginEmail] = useState<string>("");
     const [loginPwd, setLoginPwd] = useState<string>("");
     const {loggedIn, setLoggedIn} = useContext(AuthContext);

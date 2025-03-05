@@ -16,7 +16,7 @@ export default function LoginSignup() {
     
 
     return (
-        <Card className="w-[70vw] mt-10 flex flex-col gap-5 border-none ">
+        <Card className="w-[50vw] mt-10 flex flex-col gap-5 border-none ">
             <Tabs defaultValue="sign-up">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="sign-up">Sign up</TabsTrigger>

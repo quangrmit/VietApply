@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import DatePicker from "../ui/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 
 export default function ProfileForm({profileData, handleChange}: ProfileFormProps) {
@@ -17,7 +18,6 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
         if (!date){
             return ;
         }
-
         handleChange("dateOfBirth", date);
     }, [date])
 
@@ -25,14 +25,16 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
 
     return (
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-12 gap-4 w-fit max-w-3xl">
         <LabelInput
+            className="col-span-4"
             elementId="firstName"
             labelText="First name"
             inputValue={profileData.firstName}
             inputOnchange={handleChange}
             />  
         <LabelInput
+        className="col-span-4"
             elementId="middleName"
             labelText="Middle name"
             inputValue={profileData.middleName}
@@ -40,21 +42,29 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
             />  
 
         <LabelInput
+        className="col-span-4"
             elementId="lastName"
             labelText="Last name"
             inputValue={profileData.lastName}
             inputOnchange={handleChange}
             />
 
-        <div>
-            <Label className="text-zinc-400" htmlFor="dob">
+        <div className="col-span-5  w-fit">
+            <Label className="" htmlFor="dob">
                 Date of Birth
             </Label>
+            {/* <Button>something something</Button> */}
             <div id="dateOfBirth">
                 <DatePicker date={profileData.dateOfBirth} setDate={setDate} initialDate={profileData.dateOfBirth} />
             </div>
         </div>
+
+        <div className="col-span-7 ">
+            <Label >Location</Label>
+            <CitiesSearch handleSelect={handleChange} initialValue={profileData.location} />
+        </div>
         <LabelInput
+        className="col-span-6"
             elementId="email"
             labelText="Email"
             inputValue={profileData.email}
@@ -62,18 +72,14 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
             />
 
         <LabelInput
+        className="col-span-6"
             elementId="phone"
             labelText="Phone"
             inputValue={profileData.phone}
             inputOnchange={handleChange}
             />
 
-        <div className="space-y-2">
-            <Label className="block text-zinc-400">Location</Label>
-            <CitiesSearch handleSelect={handleChange} initialValue={profileData.location} />
-        </div>
-
-        <div id="salary" className=" space-x-2 grid grid-cols-2">
+        <div id="salary" className="col-span-6 space-x-2 grid grid-cols-2">
             <div className="space-y-2">
                 <Label htmlFor="minSalary" className="text-zinc-400">
                     Minimum salary (VND)
@@ -82,7 +88,7 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
                     id="minSalary"
                     value={profileData.minSalary}
                     onChange={(e) => handleChange("minSalary", e.target.value)}
-                    className="text-zinc-100  disabled:opacity-100"
+                    className="text-zinc-100  disabled:opacity-100 border-zinc-500"
                     />
             </div>
             <div className="space-y-2">
@@ -93,17 +99,17 @@ export default function ProfileForm({profileData, handleChange}: ProfileFormProp
                     id="maxSalary"
                     value={profileData.maxSalary}
                     onChange={(e) => handleChange("maxSalary", e.target.value)}
-                    className=" text-zinc-100  disabled:opacity-100"
+                    className=" text-zinc-100  disabled:opacity-100 border-zinc-500"
                     />
             </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 col-span-6">
             <Label htmlFor="jobType" className="text-zinc-400">
                 Preferred Job Type
             </Label>
             <Select onValueChange={(value) => handleChange("jobType", value)}>
-                <SelectTrigger className=" text-zinc-100 disabled:opacity-100">
+                <SelectTrigger className=" text-zinc-100 disabled:opacity-100 border-zinc-500">
                     <SelectValue placeholder="Select job type" />
                 </SelectTrigger>
                 <SelectContent>

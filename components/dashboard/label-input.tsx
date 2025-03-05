@@ -1,8 +1,11 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ProfileData } from "@/lib/types";
+import clsx from 'clsx';
+
 
 type LabelInputProps = {
+    className?: string;
     elementId: string;
     labelText: string;
     inputValue: string;
@@ -11,6 +14,7 @@ type LabelInputProps = {
 };
 
 export default function LabelInput({
+    className,
     elementId,
     labelText,
     inputValue,
@@ -18,15 +22,15 @@ export default function LabelInput({
     placeholder,
 }: LabelInputProps) {
     return (
-        <div className="space-y-2">
-            <Label htmlFor={elementId} className="text-zinc-400">
+        <div className={clsx("space-y-2", className )}>
+            <Label htmlFor={elementId} className="">
                 {labelText}
             </Label>
             <Input
                 id={elementId}
                 value={inputValue}
                 onChange={(e) => inputOnchange(elementId as keyof ProfileData, e.target.value)}
-                className=" text-zinc-100  disabled:opacity-100 hover:bg-accent"
+                className=" border-zinc-500  disabled:opacity-100 hover:bg-accent"
             />
         </div>
     );
