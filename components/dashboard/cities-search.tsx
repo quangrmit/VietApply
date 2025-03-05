@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn, removeAccents } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
     Command,
@@ -14,15 +14,14 @@ import {
     CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ProfileData } from "@/lib/types";
-import {City, CitiesSearchProps} from '../../lib/types'
+import { CitiesSearchProps } from '../../lib/types'
 import useCities from "@/hooks/useCities";
 
 
 export default function CitiesSearch({ handleSelect, initialValue }: CitiesSearchProps) {
     const [open, setOpen] = useState(false);
-    const {selectedCity, cityNames} = useCities();
-  
+    const { selectedCity, cityNames } = useCities();
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>

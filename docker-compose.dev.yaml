@@ -6,10 +6,12 @@ services:
     container_name: next_frontend
     ports:
       - "3000:3000"
+    environment:
+      - JWT_SECRET=hello
 
-  workers:
-    build: ./workers
-    container_name: ai_search_workers
+  # workers:
+  #   build: ./workers
+  #   container_name: ai_search_workers
 
   postgres:
     build: ./database

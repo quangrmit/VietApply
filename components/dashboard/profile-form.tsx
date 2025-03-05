@@ -20,8 +20,6 @@ export default function ProfileForm({ profileData, handleChange }: ProfileFormPr
         handleChange("dateOfBirth", date);
     }, [date])
 
-
-
     return (
 
         <div className="grid grid-cols-12 gap-4 w-fit max-w-3xl">

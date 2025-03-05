@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Edit } from "lucide-react";
-import { Button } from "../ui/button";
 import EditDialog from "./edit-dialog";
 import { ProfileData } from "@/lib/types";
 
@@ -24,7 +22,6 @@ const initialData: ProfileData = {
     minSalary: "3000000",
     maxSalary: "5000000",
     jobType: "full-time",
-    skills: ["JavaScript", "React", "Node.js", "Python"],
     about: "Passionate software developer with 2 years of experience in web development. Eager to contribute to innovative projects and continuously improve my skills.",
 };
 
@@ -32,7 +29,7 @@ const initialData: ProfileData = {
 
 export function ProfileInfo() {
 
-    const currUserId = 1;
+    // const currUserId = 1;
     const fetchProfileData = async () => {
         const response = await fetch(`http://localhost:3000/api/profile-get?id={currUserId}`)
         const data = await response.json();
@@ -50,7 +47,7 @@ export function ProfileInfo() {
             <div className="flex justify-between">
                 <h2 className="mb-4 text-xl font-semibold text-white ">My Profile</h2>
 
-                <EditDialog initialData={initialData} />
+                <EditDialog />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
@@ -127,36 +124,36 @@ export function ProfileInfo() {
                     />
                 </div>
                 <div id="salary" className=" space-x-2 grid grid-cols-2">
-                        <div className="space-y-2">
-                            <Label htmlFor="salaryMin" className="text-zinc-400">
-                                Minimum salary (VND)
-                            </Label>
-                            <Input
-                                id="salaryMin"
-                                value="3000"
-                                className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                                readOnly
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="salaryMin" className="text-zinc-400">
-                                Maximum salary (VND)
-                            </Label>
-                            <Input
-                                id="salaryMin"
-                                value="3000"
-                                className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                                
-                                disabled
-                            />
-                        </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="salaryMin" className="text-zinc-400">
+                            Minimum salary (VND)
+                        </Label>
+                        <Input
+                            id="salaryMin"
+                            value="3000"
+                            className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+                            readOnly
+                        />
                     </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="salaryMin" className="text-zinc-400">
+                            Maximum salary (VND)
+                        </Label>
+                        <Input
+                            id="salaryMin"
+                            value="3000"
+                            className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
+
+                            disabled
+                        />
+                    </div>
+                </div>
 
                 <div className="space-y-2">
                     <Label htmlFor="jobType" className="text-zinc-400">
                         Preferred Job Type
                     </Label>
-                    <Select  disabled>
+                    <Select disabled>
                         <SelectTrigger className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100">
                             <SelectValue placeholder="Select job type" />
                         </SelectTrigger>
@@ -175,7 +172,7 @@ export function ProfileInfo() {
                 </Label>
                 <Input
                     id="skills"
-                    value={initialData.skills.join(", ")}
+                    // value={initialData.skills.join(", ")}
                     className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                     placeholder="e.g. JavaScript, React, Node.js"
                     disabled

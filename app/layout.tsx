@@ -12,7 +12,11 @@ export const ResumeContext = createContext<ResumeContextType>({
     selectedResume: null,
     setSelectedResume: () => { },
 });
-export const AuthContext = createContext({ loggedIn: false, setLoggedIn: (loggedIn: boolean) => { } });
+export const AuthContext = createContext({
+    loggedIn: false, setLoggedIn: (loggedIn: boolean) => {
+        console.log(loggedIn);
+    }
+});
 
 export default function RootLayout({
     children,
