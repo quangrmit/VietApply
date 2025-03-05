@@ -37,7 +37,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const fileBuffer = fs.readFileSync(file.filepath); // Read the file into a buffer
 
         // Fixing the userId
-        const userId = 1;
 
         try {
             // SQL query to insert file as a BLOB (BYTEA)

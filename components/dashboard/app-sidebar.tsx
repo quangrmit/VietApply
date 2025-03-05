@@ -2,12 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, BarChart2, FileText, Settings, User } from "lucide-react"
+import { BarChart2, FileText, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuItemLink,

@@ -1,21 +1,9 @@
 'use client';
 import { GoogleTagManager } from "@next/third-parties/google";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { createContext, useState } from "react";
 import { Resume, ResumeContextType } from "@/lib/types";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 
 export const ResumeContext = createContext<ResumeContextType>({ resumes: [], setResumes: () => { }, selectedResume: null, setSelectedResume: () => { } });

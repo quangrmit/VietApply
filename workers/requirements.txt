@@ -1,7 +1,8 @@
 redis
 pgvector
 psycopg
-sentence_transformers
-playwright
-beautifulsoup4
 requests
+sentence_transformers
+psycopg[binary,pool]
+# playwright
+# beautifulsoup4

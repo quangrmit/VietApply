@@ -1,4 +1,3 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { JobCard } from "./job-card";
 
 export default function MatchesCards() {

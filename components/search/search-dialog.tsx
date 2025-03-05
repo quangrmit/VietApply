@@ -1,30 +1,17 @@
 "use client";
-import { Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "../ui/textarea";
-import {
-    Select,
-    SelectTrigger,
-    SelectValue,
-    SelectContent,
-    SelectItem,
-    SelectGroup,
-    SelectLabel,
-} from "../ui/select";
-import { FormControl } from "../ui/form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CVUpload from "./cv-upload";
 import { useRouter } from "next/navigation";

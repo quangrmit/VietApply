@@ -3,16 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
 import SearchDialog from "./search/search-dialog";
 
 
 export default function Navbar() {
     const pathname = usePathname();
 
-    const handleSearchTrigger = () => {
-        console.log("Triggered")
-    }
 
     // refactor this code to loop through an obj for cleaner code.
 
@@ -40,8 +36,8 @@ export default function Navbar() {
                         Dashboard
                     </Link>
 
-            
-                    <SearchDialog/>
+
+                    <SearchDialog />
                 </nav>
             </div>
         </nav>

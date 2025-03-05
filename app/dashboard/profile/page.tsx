@@ -2,13 +2,8 @@
 import { DocumentList } from "@/components/dashboard/document-list";
 
 import { ProfileForm } from "@/components/dashboard/profile-form";
-import React, { useEffect, useState, useContext, createContext } from "react";
+import React from "react";
 
-interface Document {
-    id: string;
-    filename: string;
-    data: object;
-}
 
 const profileData = {
     firstName: "Quang",
@@ -25,7 +20,7 @@ const profileData = {
 
 export default function ProfilePage() {
 
-    const handleUpdateProfile = () => {};
+    const handleUpdateProfile = () => { };
 
     return (
         <div className="min-h-screen bg-black p-8">
