@@ -21,12 +21,12 @@ import { ResumeContext } from "@/app/layout";
 
 export default function SearchDialog() {
     const router = useRouter();
-    const { selectedResume } = useContext(ResumeContext)
+    const { selectedResume } = useContext(ResumeContext);
 
     useEffect(() => {
-        console.log('selected changed')
-        console.log(selectedResume)
-    }, [selectedResume])
+        console.log("selected changed");
+        console.log(selectedResume);
+    }, [selectedResume]);
 
     const handleSearch = async () => {
         // Extract key words from user prompt
@@ -34,7 +34,7 @@ export default function SearchDialog() {
         // Extract embedding of the CV
 
         // Run the search op (have some state to render the search page)
-        const response = await fetch(`/api/search?id=${selectedResume?.id}`)
+        const response = await fetch(`/api/search?id=${selectedResume?.id}`);
         const data = await response.json();
         console.log(data);
 
@@ -42,7 +42,6 @@ export default function SearchDialog() {
         router.push("/");
 
         // Maybe set some state for the main page to do loading
-
     };
 
     return (
