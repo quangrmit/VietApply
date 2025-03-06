@@ -2,7 +2,7 @@
 import { DocumentList } from "@/components/dashboard/document-list";
 
 import { ProfileInfo } from "@/components/dashboard/profile-info";
-import React, { useEffect, useState, useContext, createContext } from "react";
+import React from "react";
 
 export default function ProfilePage() {
     return (

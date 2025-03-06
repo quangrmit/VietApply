@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 
 export type Resume = {
     id: string;
@@ -46,7 +45,7 @@ export type UserData = ProfileData & {
 
 export interface ProfileFormProps {
     profileData: ProfileData;
-    handleChange: (field: keyof ProfileData, newValue: string | Date | JobType | string[] ) => void;
+    handleChange: (field: keyof ProfileData, newValue: string | Date | JobType | string[]) => void;
 }
 
 export type City = {

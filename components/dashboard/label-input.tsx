@@ -21,8 +21,10 @@ export default function LabelInput({
     inputOnchange,
     placeholder,
 }: LabelInputProps) {
+    console.log(placeholder);
+
     return (
-        <div className={clsx("space-y-2", className )}>
+        <div className={clsx("space-y-2", className)}>
             <Label htmlFor={elementId} className="">
                 {labelText}
             </Label>

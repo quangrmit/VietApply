@@ -1,22 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/select";
 import { ResumeContext } from "@/app/layout";
-interface Resume {
-    id: string;
-    filename: string;
-    data: object;
-}
 
 
 
 export default function CVSelect() {
 
-    const {resumes, setResumes, selectedResume, setSelectedResume} = useContext(ResumeContext);
+    const { resumes, setResumes, selectedResume, setSelectedResume } = useContext(ResumeContext);
+    console.log(setResumes);
 
     const chooseFromList = (index: string) => {
         const result = resumes[parseInt(index)];
         setSelectedResume(result)
-    }   
+    }
 
 
     useEffect(() => {

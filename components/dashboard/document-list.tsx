@@ -1,18 +1,15 @@
 "use client";
 import { Trash2, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Secular_One } from "next/font/google";
 import {
     DialogClose,
     Dialog,
     DialogContent,
     DialogTitle,
     DialogTrigger,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
 } from "../ui/dialog";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useContext, useEffect, useState } from "react";
 import { ResumeContext } from "@/app/layout";
@@ -43,7 +40,7 @@ export function DocumentList({ title }: DocumentListProps) {
 
     useEffect(() => {
         fetchResumes();
-    }, []);
+    });
 
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -69,20 +66,13 @@ export function DocumentList({ title }: DocumentListProps) {
         fetchResumes();
     };
 
-    const handlePreviewFile = async () => {
-        const response = await fetch("http://localhost:3000/api/preview");
-
-        // Receives blob data instead of json
-        const data = await response.blob();
-        console.log("preview data: ", data);
-    };
 
     const onDelete = async (id: string) => {
-        try{
+        try {
             const response = await fetch(`http://localhost:3000/api/delete-cv?id=${id}`)
             const data = await response.json();
-
-        }catch(error){
+            console.log(data);
+        } catch (error) {
             console.log(error);
 
         }
@@ -136,7 +126,7 @@ export function DocumentList({ title }: DocumentListProps) {
                             <DialogTrigger>
                                 <span
                                     className="text-sm text-zinc-300 hover:underline hover:cursor-pointer"
-    
+
                                 >
                                     {doc.filename}
                                 </span>
@@ -154,7 +144,7 @@ export function DocumentList({ title }: DocumentListProps) {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 text-red-400 hover:text-red-500"
-                              onClick={() => onDelete(doc.id)}
+                            onClick={() => onDelete(doc.id)}
                         >
                             <Trash2 className="h-4 w-4" />
                         </Button>

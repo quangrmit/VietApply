@@ -1,13 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import ProfileForm from "../dashboard/profile-form";
-import { Progress } from "../ui/progress";
-import ProgressSignUp from "./progress-sign-up";
 import { JobType, ProfileData } from "@/lib/types";
 import { Button } from "../ui/button";
-import { splitByComma } from "@/lib/utils";
-import { profile } from "console";
 import { Input } from "../ui/input";
-import { json } from "stream/consumers";
 import { AuthContext } from "@/app/layout";
 import { Label } from "../ui/label";
 

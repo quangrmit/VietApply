@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Redis from "ioredis";
 import { v4 as uuidv4 } from "uuid";
-import formidable, { IncomingForm, File } from "formidable";
+import formidable, { IncomingForm } from "formidable";
 import fs from "fs/promises";
 
 export const config = {
@@ -10,7 +10,7 @@ export const config = {
     },
 };
 
-const redis = new Redis("redis://localhost:6379");
+const redis = new Redis("redis://job_queue:6379");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {
@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
 
         const { fields, files } = await parseForm();
-
+        console.log(fields);
         const jobId = uuidv4();
         const message = `Job-${Math.floor(Math.random() * 1000)}`;
 

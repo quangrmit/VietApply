@@ -1,19 +1,9 @@
-import { Button } from "../ui/button"
-import { Card, CardContent, CardFooter } from "../ui/card";
+import { Card } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import SignUpFlow from "./sign-up-flow";
-import { JobType, ProfileData } from "@/lib/types";
-import { useEffect, useState } from "react";
 import LoginForm from "./login-form";
 
-
-
-
-
-
 export default function LoginSignup() {
-
-    
 
     return (
         <Card className="w-[50vw] mt-10 flex flex-col gap-5 border-none ">
@@ -23,10 +13,10 @@ export default function LoginSignup() {
                     <TabsTrigger value="log-in">Log in</TabsTrigger>
                 </TabsList>
                 <TabsContent value="sign-up">
-                    <SignUpFlow/>
+                    <SignUpFlow />
                 </TabsContent>
                 <TabsContent value="log-in" className="stable-scrollbar">
-                    <LoginForm/>
+                    <LoginForm />
                 </TabsContent>
             </Tabs>
         </Card>
