@@ -38,7 +38,7 @@ export default function SignUpFlow() {
     useEffect(() => {
         console.log("changed profile data", profileData);
     }, [profileData]);
-
+    
     const handleSignUp = async () => {
         console.log("handling sign up");
         // Get all the profile data

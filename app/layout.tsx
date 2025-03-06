@@ -6,7 +6,6 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { createContext, useState } from "react";
 import { Resume, ResumeContextType } from "@/lib/types";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import useLogin from "@/hooks/useLogin";
 
 const geistSans = Geist({
@@ -36,7 +35,7 @@ export default function RootLayout({
     const [resumes, setResumes] = useState<Resume[]>([]);
     const { loggedIn, setLoggedIn } = useLogin();
     return (
-        <GoogleOAuthProvider clientId="125849592219-nbou4ddqnl4vdjn3smsff8huqfbmsvot.apps.googleusercontent.com">
+
             <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
                 <html lang="en">
                     <body className="dark stable-scrollbar overflow-y-auto">
@@ -50,6 +49,5 @@ export default function RootLayout({
                     <GoogleTagManager gtmId="G-2D4QZYP55V" />
                 </html>
             </AuthContext.Provider>
-        </GoogleOAuthProvider>
     );
 }
