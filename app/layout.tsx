@@ -2,36 +2,41 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import { createContext, useState } from "react";
-import { Resume, ResumeContextType } from "@/lib/types";
-import useLogin from "@/hooks/useLogin";
+import { createContext } from "react";
+import {  ResumeContextType } from "@/lib/types";
+import useAuth from "@/hooks/use-auth";
+import useResumes from "@/hooks/use-resumes";
+import dynamic from "next/dynamic";
 
 export const ResumeContext = createContext<ResumeContextType>({
     resumes: [],
-    setResumes: () => { },
+    setResumes: () => {},
     selectedResume: null,
-    setSelectedResume: () => { },
+    setSelectedResume: () => {},
+    fetchResumes: () => {}
 });
 export const AuthContext = createContext({
-    loggedIn: false, setLoggedIn: (loggedIn: boolean) => {
+    loggedIn: false,
+    setLoggedIn: (loggedIn: boolean) => {
         console.log(loggedIn);
-    }
+    },
 });
 
-export default function RootLayout({
+ function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
-    const [resumes, setResumes] = useState<Resume[]>([]);
-    const { loggedIn, setLoggedIn } = useLogin();
+    const { loggedIn, setLoggedIn } = useAuth();
+
+    const {resumes, setResumes, selectedResume, setSelectedResume, fetchResumes} = useResumes();
+
     return (
         <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
             <html lang="en">
                 <body className="dark stable-scrollbar overflow-y-auto">
                     <ResumeContext.Provider
-                        value={{ resumes, setResumes, selectedResume, setSelectedResume }}
+                        value={{ resumes, setResumes, selectedResume, setSelectedResume , fetchResumes}}
                     >
                         <Navbar />
                         <div className="flex items-center justify-center">{children}</div>
@@ -42,3 +47,7 @@ export default function RootLayout({
         </AuthContext.Provider>
     );
 }
+
+export default  dynamic(() => Promise.resolve(RootLayout), {
+    ssr: false
+  })

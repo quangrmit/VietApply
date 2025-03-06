@@ -10,9 +10,11 @@ export type ResumeContextType = {
     setResumes: (resumes: Resume[]) => void;
     selectedResume: Resume | null;
     setSelectedResume: (resume: Resume) => void;
+    fetchResumes: () => void;
 }
 
 export type JobType = "full-time" | "part-time" | "freelance" | "contract" | "internship"
+
 
 export interface ProfileData {
     firstName: string;
@@ -46,6 +48,7 @@ export type UserData = ProfileData & {
 export interface ProfileFormProps {
     profileData: ProfileData;
     handleChange: (field: keyof ProfileData, newValue: string | Date | JobType | string[]) => void;
+    disabled?: boolean;
 }
 
 export type City = {

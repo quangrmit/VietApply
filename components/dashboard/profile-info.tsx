@@ -1,46 +1,48 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import EditDialog from "./edit-dialog";
-import { ProfileData } from "@/lib/types";
-
+// import { ProfileData } from "@/lib/types";
 
 // Fetch instead of fixing
-const initialData: ProfileData = {
-    firstName: "Quang",
-    middleName: "Duc",
-    lastName: "Nguyen",
-    dateOfBirth: new Date(2003, 11, 17),
-    email: "quang.nguyen@example.com",
-    phone: "+84 123 456 789",
-    location: "Hồ Chí Minh",
-    minSalary: "3000000",
-    maxSalary: "5000000",
-    jobType: "full-time",
-    about: "Passionate software developer with 2 years of experience in web development. Eager to contribute to innovative projects and continuously improve my skills.",
+const initialData = {
+    firstname: "quang",
+    middlename: "",
+    lastname: "",
+    dateofbirth: new Date(),
+    email: "",
+    phone: "",
+    location: "",
+    minsalary: "",
+    maxsalary: "",
+    jobtype: "full-time",
+    about: "",
 };
-
-
 
 export function ProfileInfo() {
 
+    const [profileData, setProfileData] = useState(initialData);
     // const currUserId = 1;
     const fetchProfileData = async () => {
-        const response = await fetch(`http://localhost:3000/api/profile-get?id={currUserId}`)
+        const currUserToken = localStorage.getItem("jwt");
+        const response = await fetch(`http://localhost:3000/api/profile-get?token=${currUserToken}`);
         const data = await response.json();
-        console.log(data);
-    }
+
+        setProfileData(data)
+    };
+
+    useEffect(() => {
+        console.log(profileData)
+    }, [profileData])
 
     useEffect(() => {
         fetchProfileData();
-    }, [])
-
-
+    }, []);
 
     return (
         <div className="rounded-lg bg-zinc-900 p-4 h-full overflow-y-auto ">
@@ -56,7 +58,7 @@ export function ProfileInfo() {
                     </Label>
                     <Input
                         id="firstName"
-                        value={initialData.firstName}
+                        value={profileData.firstname}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
@@ -68,24 +70,24 @@ export function ProfileInfo() {
                     </Label>
                     <Input
                         id="lastName"
-                        value={initialData.lastName}
+                        value={profileData.lastname}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
                     />
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                     <Label htmlFor="dateOfBirth" className="text-zinc-400">
                         Date of Birth
                     </Label>
                     <Input
                         id="dateOfBirth"
-                        value={initialData.dateOfBirth.toLocaleDateString()}
+                        value={profileData.dateOfBirth.toLocaleDateString()}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
                     />
-                </div>
+                </div> */}
                 <div className="space-y-2">
                     <Label htmlFor="email" className="text-zinc-400">
                         Email
@@ -93,7 +95,7 @@ export function ProfileInfo() {
                     <Input
                         id="email"
                         type="email"
-                        value={initialData.email}
+                        value={profileData.email}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
@@ -105,7 +107,7 @@ export function ProfileInfo() {
                     </Label>
                     <Input
                         id="phone"
-                        value={initialData.phone}
+                        value={profileData.phone}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
@@ -117,7 +119,7 @@ export function ProfileInfo() {
                     </Label>
                     <Input
                         id="location"
-                        value={initialData.location}
+                        value={profileData.location}
                         className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                         disabled
                         readOnly
@@ -130,20 +132,19 @@ export function ProfileInfo() {
                         </Label>
                         <Input
                             id="salaryMin"
-                            value="3000"
+                            value={profileData.minsalary}
                             className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                             readOnly
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="salaryMin" className="text-zinc-400">
+                        <Label htmlFor="salaryMax" className="text-zinc-400">
                             Maximum salary (VND)
                         </Label>
                         <Input
-                            id="salaryMin"
-                            value="3000"
+                            id="salaryMax"
+                            value={profileData.maxsalary}
                             className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-
                             disabled
                         />
                     </div>
@@ -155,7 +156,7 @@ export function ProfileInfo() {
                     </Label>
                     <Select disabled>
                         <SelectTrigger className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100">
-                            <SelectValue placeholder="Select job type" />
+                            <SelectValue placeholder={profileData.jobtype}/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="full-time">Full-time</SelectItem>
@@ -166,25 +167,14 @@ export function ProfileInfo() {
                     </Select>
                 </div>
             </div>
-            <div className="mt-4 space-y-2">
-                <Label htmlFor="skills" className="text-zinc-400">
-                    Skills
-                </Label>
-                <Input
-                    id="skills"
-                    // value={initialData.skills.join(", ")}
-                    className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
-                    placeholder="e.g. JavaScript, React, Node.js"
-                    disabled
-                />
-            </div>
+
             <div className="mt-4 space-y-2">
                 <Label htmlFor="about" className="text-zinc-400">
                     About
                 </Label>
                 <Textarea
                     id="about"
-                    value={initialData.about}
+                    value={profileData.about}
                     className="bg-zinc-800 text-zinc-100 border-none disabled:opacity-100"
                     placeholder="Brief description about yourself"
                     rows={3}

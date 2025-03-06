@@ -4,7 +4,7 @@ import { query } from "./db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Fetch all resumes, and put them in an 
-
+    
 
     const sql = 'SELECT * from cvs';
     // const values = [fileId];

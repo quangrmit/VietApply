@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CitiesSearchProps } from '../../lib/types'
-import useCities from "@/hooks/useCities";
+import useCities from "@/hooks/use-cities";
 
 
 export default function CitiesSearch({ handleSelect, initialValue }: CitiesSearchProps) {

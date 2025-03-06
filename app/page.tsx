@@ -1,7 +1,7 @@
 "use client";
 import LoginSignup from "@/components/auth/login-signup";
 import { useContext, useEffect } from "react";
-import JobsPage from "./jobs/page";
+import JobsPage from "../components/results/jobs-page";
 import { AuthContext } from "./layout";
 
 export default function HomePage() {

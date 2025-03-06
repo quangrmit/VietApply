@@ -1,3 +1,4 @@
+'use client'
 import { useContext, useEffect, useState } from "react";
 import ProfileForm from "../dashboard/profile-form";
 import { JobType, ProfileData } from "@/lib/types";

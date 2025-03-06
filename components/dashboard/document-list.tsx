@@ -23,25 +23,12 @@ interface DocumentListProps {
 export function DocumentList({ title }: DocumentListProps) {
     const [file, setFile] = useState<File | null>(null);
 
-    const { resumes, setResumes } = useContext(ResumeContext);
+    const { resumes, fetchResumes } = useContext(ResumeContext);
 
-    const fetchResumes = async () => {
-        try {
-            const response = await fetch("http://localhost:3000/api/resumes");
-            const data = await response.json();
-
-            setResumes(data);
-
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     useEffect(() => {
         fetchResumes();
-    });
-
+    }, []);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const files = event.target.files;
