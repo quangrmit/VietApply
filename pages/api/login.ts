@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // get hashed password by email
 
-    const sql = 'SELECT password FROM users WHERE email = $1';
+    const sql = 'SELECT password, id FROM users WHERE email = $1';
     const values = [email];
     const result = await query(sql, values);
 
@@ -39,6 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // should include the user id as well, or create an index for email for faster retrieval
     const payload : JwtPayload = {
         email: email,
+        userId: result[0].id,
         role: 'user',
         sub: 'VietApply'
     }

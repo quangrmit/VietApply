@@ -2,6 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingForm, Fields, Files } from 'formidable';
 import fs from 'fs';
 import { query } from './db'; // Assuming your database connection is set up in 'lib/db'
+import jwt, {Secret} from 'jsonwebtoken'
+import { decodeToken } from '@/lib/utils';
+import { JwtPayload } from '@/lib/types';
 
 export const config = {
     api: {
@@ -11,6 +14,16 @@ export const config = {
 
 // Type the function parameters in the form.parse callback
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    const token = req.query.token;
+    if (!token) return res.status(400).json({message:
+        'no token found'
+    })
+    const decoded = decodeToken(token as string) as JwtPayload;
+    const userId = decoded.userId;
+    console.log('this is userid in upload', userId)
+
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: `Method ${req.method} not allowed` });
     }
@@ -40,10 +53,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
         try {
             // SQL query to insert file as a BLOB (BYTEA)
-            const sql = 'INSERT INTO cvs (filename, data) VALUES ($1, $2) RETURNING id';
+            const sql = 'INSERT INTO cvs (filename, data, user_id) VALUES ($1, $2, $3) RETURNING id';
             console.log('this is file buffer')
             console.log(fileBuffer);
-            const values = [oriFilename, fileBuffer];
+            const values = [oriFilename, fileBuffer, userId];
             const result = await query(sql, values); // Insert into your PostgreSQL database
             console.log(result)
 

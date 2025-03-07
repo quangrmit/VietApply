@@ -28,7 +28,7 @@ export interface ProfileData {
     maxSalary: string;
     jobType: JobType;
     // skills: string[];
-    about: string;
+    about: string;  
 }
 export type LoginData = {
     email: string;
@@ -37,6 +37,7 @@ export type LoginData = {
 
 export type JwtPayload = {
     email: string;
+    userId: number;
     sub: string;
     role: string;
 }

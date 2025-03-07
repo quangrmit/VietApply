@@ -12,7 +12,7 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { useContext, useEffect, useState } from "react";
-import { ResumeContext } from "@/app/layout";
+import { AuthContext, ResumeContext } from "@/app/layout";
 
 
 interface DocumentListProps {
@@ -24,6 +24,7 @@ export function DocumentList({ title }: DocumentListProps) {
     const [file, setFile] = useState<File | null>(null);
 
     const { resumes, fetchResumes } = useContext(ResumeContext);
+    const {token} = useContext(AuthContext)
 
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export function DocumentList({ title }: DocumentListProps) {
         const formData = new FormData();
         formData.append("pdf", file);
 
-        const response = await fetch("http://localhost:3000/api/upload", {
+        const response = await fetch(`http://localhost:3000/api/upload?token=${token}`, {
             method: "POST",
             body: formData,
         });

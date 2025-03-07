@@ -54,6 +54,11 @@ export function generateToken(payload: JwtPayload) {
   return token;
 }
 
+export function decodeToken (token: string){
+  const secret = <Secret>process.env.JWT_SECRET;
+  return jwt.verify(token, secret);
+}
+
 // Verifying a password
 export async function verifyPassword(password: string, hashedPassword: string) {
   return await bcrypt.compare(password, hashedPassword);

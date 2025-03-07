@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 
 export default function useAuth() {
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt') as string;
 
     const verifyToken = async (token: string) => {
         const reqBody = { token: token }

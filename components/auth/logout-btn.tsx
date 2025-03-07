@@ -1,4 +1,3 @@
-import useAuth from "@/hooks/use-auth";
 import { Button } from "../ui/button";
 import { useContext } from "react";
 import { AuthContext } from "@/app/layout";

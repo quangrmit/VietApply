@@ -20,6 +20,7 @@ export const AuthContext = createContext({
     setLoggedIn: (loggedIn: boolean) => {
         console.log(loggedIn);
     },
+    token:""
 });
 
  function RootLayout({
@@ -27,14 +28,14 @@ export const AuthContext = createContext({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { loggedIn, setLoggedIn } = useAuth();
+    const { loggedIn, setLoggedIn, token} = useAuth();
 
     const {resumes, setResumes, selectedResume, setSelectedResume, fetchResumes} = useResumes();
 
    
 
     return (
-        <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
+        <AuthContext.Provider value={{ loggedIn, setLoggedIn , token}}>
             <html lang="en">
                 <body className="dark stable-scrollbar overflow-y-auto">
                     <ResumeContext.Provider

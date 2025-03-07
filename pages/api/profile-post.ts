@@ -27,10 +27,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const sql = `INSERT INTO users (${columns}) VALUES (${placeholders}) RETURNING *;`;
     const result = await query(sql, values);
 
+    console.log('result after posting', result);
+    console.log('this is result[0].id', result[0].id);
 
     // create token
     const payload: JwtPayload = {
         email: userData.email,
+        userId: result[0].id, // how to get userId here
         sub: 'VietApply',
         role: 'user'
     }
