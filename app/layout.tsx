@@ -49,7 +49,7 @@ export const AuthContext = createContext({
         </AuthContext.Provider>
     );
 }
-
+// disable ssr
 export default  dynamic(() => Promise.resolve(RootLayout), {
     ssr: false
   })
