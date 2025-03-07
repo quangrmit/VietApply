@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import SearchDialog from "./search/search-dialog";
 import { useContext } from "react";
 import { AuthContext } from "@/app/layout";
+import LogOutBtn from "./auth/logout-btn";
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -43,6 +44,7 @@ export default function Navbar() {
                             </Link>
 
                             <SearchDialog />
+                            <LogOutBtn/>
                         </>
                     ) : (
                         <></>

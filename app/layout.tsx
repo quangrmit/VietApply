@@ -2,7 +2,7 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import {  ResumeContextType } from "@/lib/types";
 import useAuth from "@/hooks/use-auth";
 import useResumes from "@/hooks/use-resumes";
@@ -30,6 +30,8 @@ export const AuthContext = createContext({
     const { loggedIn, setLoggedIn } = useAuth();
 
     const {resumes, setResumes, selectedResume, setSelectedResume, fetchResumes} = useResumes();
+
+   
 
     return (
         <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>

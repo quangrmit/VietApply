@@ -5,11 +5,14 @@ import JobsPage from "../components/results/jobs-page";
 import { AuthContext } from "./layout";
 
 export default function HomePage() {
-  const { loggedIn } = useContext(AuthContext);
+    const { loggedIn } = useContext(AuthContext);
+    useEffect(() => {
+        console.log("re-rendered");
+    }, []);
 
-  useEffect(() => {
-    console.log("changed logged in to ", loggedIn);
-  }, [loggedIn]);
+    useEffect(() => {
+        console.log("changed logged in to ", loggedIn);
+    }, [loggedIn]);
 
-  return <>{loggedIn ? <JobsPage /> : <LoginSignup />}</>;
+    return <>{loggedIn ? <JobsPage /> : <LoginSignup />}</>;
 }
