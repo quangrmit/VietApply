@@ -25,6 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const placeholders = values.map((_, i) => `$${i + 1}`).join(', ');
     const sql = `INSERT INTO users (${columns}) VALUES (${placeholders}) RETURNING *;`;
+    console.log(sql)
     const result = await query(sql, values);
 
     console.log('result after posting', result);

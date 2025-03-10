@@ -5,7 +5,7 @@ import time
 
 from database import fetch_resume_text, vector_search_job
 
-r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+r = redis.Redis(host="job_queue", port=6379, decode_responses=True)
 
 def process_job(job_data):
     """Custom processing logic"""

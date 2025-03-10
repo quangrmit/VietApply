@@ -9,9 +9,10 @@ services:
     environment:
       - JWT_SECRET=hello
 
-  # workers:
-  #   build: ./workers
-  #   container_name: ai_search_workers
+  workers:
+    image: kreden35/vietapply-workers
+    # build: ./workers
+    container_name: ai_search_workers
 
   postgres:
     build: ./database

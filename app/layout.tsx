@@ -2,44 +2,44 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import { createContext, useEffect } from "react";
-import {  ResumeContextType } from "@/lib/types";
+import { createContext } from "react";
+import { ResumeContextType } from "@/lib/types";
 import useAuth from "@/hooks/use-auth";
 import useResumes from "@/hooks/use-resumes";
 import dynamic from "next/dynamic";
 
 export const ResumeContext = createContext<ResumeContextType>({
     resumes: [],
-    setResumes: () => {},
+    setResumes: () => { },
     selectedResume: null,
-    setSelectedResume: () => {},
-    fetchResumes: () => {}
+    setSelectedResume: () => { },
+    fetchResumes: () => { }
 });
 export const AuthContext = createContext({
     loggedIn: false,
     setLoggedIn: (loggedIn: boolean) => {
         console.log(loggedIn);
     },
-    token:""
+    token: ""
 });
 
- function RootLayout({
+function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { loggedIn, setLoggedIn, token} = useAuth();
+    const { loggedIn, setLoggedIn, token } = useAuth();
 
-    const {resumes, setResumes, selectedResume, setSelectedResume, fetchResumes} = useResumes();
+    const { resumes, setResumes, selectedResume, setSelectedResume, fetchResumes } = useResumes();
 
-   
+
 
     return (
-        <AuthContext.Provider value={{ loggedIn, setLoggedIn , token}}>
+        <AuthContext.Provider value={{ loggedIn, setLoggedIn, token }}>
             <html lang="en">
                 <body className="dark stable-scrollbar overflow-y-auto">
                     <ResumeContext.Provider
-                        value={{ resumes, setResumes, selectedResume, setSelectedResume , fetchResumes}}
+                        value={{ resumes, setResumes, selectedResume, setSelectedResume, fetchResumes }}
                     >
                         <Navbar />
                         <div className="flex items-center justify-center">{children}</div>
@@ -51,6 +51,6 @@ export const AuthContext = createContext({
     );
 }
 // disable ssr
-export default  dynamic(() => Promise.resolve(RootLayout), {
+export default dynamic(() => Promise.resolve(RootLayout), {
     ssr: false
-  })
+})

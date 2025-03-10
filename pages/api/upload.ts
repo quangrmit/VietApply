@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingForm, Fields, Files } from 'formidable';
 import fs from 'fs';
 import { query } from './db'; // Assuming your database connection is set up in 'lib/db'
-import jwt, {Secret} from 'jsonwebtoken'
 import { decodeToken } from '@/lib/utils';
 import { JwtPayload } from '@/lib/types';
 
@@ -16,8 +15,9 @@ export const config = {
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const token = req.query.token;
-    if (!token) return res.status(400).json({message:
-        'no token found'
+    if (!token) return res.status(400).json({
+        message:
+            'no token found'
     })
     const decoded = decodeToken(token as string) as JwtPayload;
     const userId = decoded.userId;

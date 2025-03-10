@@ -9,7 +9,7 @@ conn = psycopg.connect(
     dbname="devdb",
     user="devuser",
     password="devpassword",
-    host="localhost",
+    host="postgres",
     port="5432",
     autocommit=True
 )
